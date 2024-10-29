@@ -1,35 +1,41 @@
+
 #include <stdio.h>
 
-int busca_binaria(int arr[], int esquerda, int direita, int x) {
-    if (direita >= esquerda) {
-        int meio = esquerda + (direita - esquerda) / 2;
-
-  
-        if (arr[meio] == x)
+int buscaBinaria(int array[], int inicio, int fim, int x) {
+    if (fim >= inicio) {
+        int meio = inicio + (fim - inicio) / 2;
+    
+        if (array[meio] == x)
             return meio;
 
-      
-        if (arr[meio] > x)
-            return busca_binaria(arr, esquerda, meio - 1, x);
-
-        
-        return busca_binaria(arr, meio + 1, direita, x);
+        if (array[meio] > x)
+            return buscaBinaria(array, inicio, meio - 1, x);
+    
+        return buscaBinaria(array, meio + 1, fim, x);
     }
-
     
     return -1;
 }
 
 int main() {
-    int arr[] = {2, 3, 4, 10, 40};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int x = 10;
-    int resultado = busca_binaria(arr, 0, n - 1, x);
-
+    int array[] = {1, 4, 6, 9, 3, 7, 2, 8};
+    int n = sizeof(array) / sizeof(array[0]);
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - 1 - i; j++) {
+            if (array[j] > array[j + 1]) {
+                int temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            }
+        }
+    }
+    int x;
+    printf("Digite um número a ser procurado: ");
+    scanf("%d", &x); // Certifique-se de que essa linha está correta
+    int resultado = buscaBinaria(array, 0, n - 1, x);
     if (resultado != -1)
-        printf("Elemento está presente no índice %d\n", resultado);
+        printf("Elemento encontrado no índice: %d\n", resultado);
     else
-        printf("Elemento não está presente no array\n");
-
+        printf("-1\n");
     return 0;
 }
